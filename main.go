@@ -2,9 +2,11 @@ package main
 
 import (
 	"bwastartup/auth"
+	"bwastartup/campaign"
 	"bwastartup/handler"
 	"bwastartup/helper"
 	"bwastartup/user"
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -26,25 +28,21 @@ func main() {
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
-
-	// token, err := authService.ValidateToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.jBvaWZVpqBF9oL0DTMp31fQtpJuk1D9sihuBvxz7U0c")
-	// if err != nil {
-	// 	fmt.Println("Error")
-	// 	fmt.Println("Error")
-	// 	fmt.Println("Error")
-	// }
-
-	// if token.Valid {
-	// 	fmt.Println("Valid")
-	// 	fmt.Println("Valid")
-	// 	fmt.Println("Valid")
-	// } else {
-	// 	fmt.Println("Invalid")
-	// 	fmt.Println("Invalid")
-	// 	fmt.Println("Invalid")
-	// }
-
 	userHandler := handler.NewUserHandler(userService, authService)
+
+	campaignRepository := campaign.NewRepository(db)
+	// campaigns, err := campaignRepository.FindAll()
+	campaigns, err := campaignRepository.FindByUserID(1)
+
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println(len(campaigns))
+	for _, campaign := range campaigns {
+		fmt.Println(campaign.Name)
+		fmt.Println(campaign.CampaignImages[0].FileName)
+	}
 
 	router := gin.Default()
 	api := router.Group("/api/v1")
