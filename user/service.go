@@ -47,6 +47,7 @@ func (s *service) RegisterUser(input RegisterUserInput) (User, error) {
 func (s *service) Login(input LoginInput) (User, error) {
 	email := input.Email
 	password := input.Password
+	print(email)
 
 	user, err := s.repository.FindByEmail(email)
 	if err != nil {
