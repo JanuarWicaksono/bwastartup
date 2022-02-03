@@ -66,7 +66,6 @@ func (h *campaignHandler) CreateCampaign(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
-
 	currentUser := c.MustGet("currentUser").(user.User)
 
 	input.User = currentUser
